@@ -137,10 +137,10 @@
     </div>
 
         <script>
-            const logado = true
-            const name = "Matheus"
+            localStorage.token = true
+            const name = localStorage.user_name
 
-            if(logado)
+      if(localStorage.token)
                 document.querySelector('#userOrEnter').innerHTML = 
                     `<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         ${name}
