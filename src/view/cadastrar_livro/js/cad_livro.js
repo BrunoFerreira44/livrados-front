@@ -36,7 +36,7 @@ let msgError = document.querySelector('#msgError')
 let msgSucess = document.querySelector('#msgSucess')
 
 //Funções --------------------------------------------
-function cadastrar(){
+/*function cadastrar(){
   if(validIsbn && validTitulo && validAutor && validEdicao && validCep && validEditora && validIdioma && validAcabamento){
     msgSucess.setAttribute('style', 'display: block')
     msgSucess.innerHTML = '<strong>Cadastrando livro...</strong>'
@@ -48,7 +48,7 @@ function cadastrar(){
     msgSucess.setAttribute('style', 'display: none')
     msgSucess.innerHTML = ''
   }
-}
+}*/
 
 
 //Eventos --------------------------------------------

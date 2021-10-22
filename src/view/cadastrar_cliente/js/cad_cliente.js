@@ -51,7 +51,7 @@ let msgError = document.querySelector('#msgError')
 let msgSucess = document.querySelector('#msgSucess')
 
 //Funções --------------------------------------------
-function cadastrar(){
+/*function cadastrar(){
   if(validNome && validEmail && validSenha && validConfirmSenha && validCep && validEndereco && validNumero && validBairro && validCidade && validEstado){
     msgSucess.setAttribute('style', 'display: block')
     msgSucess.innerHTML = '<strong>Cadastrando usuário...</strong>'
@@ -63,7 +63,7 @@ function cadastrar(){
     msgSucess.setAttribute('style', 'display: none')
     msgSucess.innerHTML = ''
   }
-}
+}*/
 
 
 //Eventos --------------------------------------------
