@@ -1,0 +1,260 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    background-color: #FAFAFA;
+  }
+
+  header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px 10%;
+    background-color: #323232;
+  }
+  
+  .logo {
+    margin-right: auto;
+  }
+
+  .logoimagem{
+    max-width: 15%;
+    min-width: 10%;
+  }
+  
+  .nav__links {
+    list-style: none;
+    display: flex;
+  }
+  
+  .nav__links a,
+  .cta,
+  .overlay__content a {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 500;
+    color: #edf0f1;
+    text-decoration: none;
+  }
+  
+  .nav__links li {
+    padding: 0px 20px;
+  }
+  
+  .nav__links li a {
+    transition: all 0.3s ease 0s;
+  }
+  
+  .nav__links li a:hover {
+    color: #f8a72d;
+  }
+  
+  .cta {
+    margin-left: 20px;
+    padding: 9px 25px;
+    background-color: #f8a72d;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+  }
+  
+  .cta:hover {
+    background-color: #f8a72d;
+  }
+  
+  /* Mobile Nav */
+  
+  .menu {
+    display: none;
+  }
+  
+  .overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    background-color: #323232;
+    overflow-x: hidden;
+    transition: all 0.5s ease 0s;
+  }
+  
+  .overlay--active {
+    width: 100%;
+  }
+  
+  .overlay__content {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .overlay a {
+    padding: 15px;
+    font-size: 36px;
+    display: block;
+    transition: all 0.3s ease 0s;
+  }
+  
+  .overlay a:hover,
+  .overlay a:focus {
+    color: #f8a72d;
+  }
+  .overlay .close {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+    color: #edf0f1;
+    cursor: pointer;
+  }
+  
+  /* Nav - Usuário */
+  nav ul{
+    list-style: none;
+  }
+
+  nav ul li a{
+    position: relative;
+    color: #edf0f1;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    display: block;
+    width: 100%;
+    border-left: 3px solid transparent;
+  }
+  
+  nav ul li.active a{
+    color: #f8a72d;
+    background: #1e1e1e;
+    border-left-color: #f8a72d;
+  }
+  
+  nav ul ul{
+    position: static;
+    display: none;
+  }
+
+  nav ul .user-show.show{
+    display: block;
+  }
+
+  nav ul ul li{
+    line-height: 42px;
+    border-top: none;
+  }
+
+  nav ul ul li a{
+    font-size: 15px;
+    color: #e6e6e6;
+    padding-left: 5px;
+  }
+
+  nav ul li.active ul li a{
+    color: #e6e6e6;
+    background: #1b1b1b;
+    border-left-color: transparent;
+  }
+
+  nav ul ul li a:hover{
+    color: #f8a72d!important;
+  }
+
+  nav ul li a span{
+    position: absolute;
+    top: 50%;
+    left: 75px;
+    transform: translateY(-50%);
+    font-size: 22px;
+    transition: transform 0.4s;
+  }
+  
+  nav ul li a span.rotate{
+    transform: translateY(-50%) rotate(-180deg);
+  }
+
+  @media screen and (max-height: 450px) {
+    .overlay a {
+      font-size: 20px;
+    }
+    .overlay .close {
+      font-size: 40px;
+      top: 15px;
+      right: 35px;
+    }
+  }
+  
+  @media only screen and (max-width: 800px) {
+    .nav__links,
+    .cta {
+      display: none;
+    }
+    .menu {
+      display: initial;
+    }
+  }
+
+  .btn-detalhe {
+    width: 40%;
+    height: 30px;
+    background-color: #f8a72d;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    background-color: #f8a72d;
+    
+ }
+ 
+ .btn-detalhe:hover {
+  background-color: #f8a72dbb;
+}
+
+.card:hover{
+  box-shadow: 0 8px 8px 0 rgba(0,0,0,0.2);
+}
+
+.slidecontainer {
+  margin-left: 6%;
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 94%;
+  height: 10px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #f8a72d;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #f8a72d;
+  cursor: pointer;
+}
