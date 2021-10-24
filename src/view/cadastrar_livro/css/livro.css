@@ -14,25 +14,15 @@ body {
   background-attachment: fixed;  
 }
 
-.background-upon{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50vh;
-  background-color: #f8a72dCC;
-  border-bottom: 1px solid #32323211;
-}
-
 .container {
   display: flex;
   justify-content: center;
-  width: 70%;
+  width: 100%;
   margin-top: auto;
 }
 
 .card {
-  width: 80%;
+  width: 70%;
   height: auto;
   padding: 30px 40px;
   margin: 0 auto;
