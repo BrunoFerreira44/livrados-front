@@ -83,7 +83,7 @@ body {
   color: black;
 }
 
-button{
+.botaoCadastro{
   width: 95%;
   height: 40px;
   background-color: #f8a72d;
@@ -96,7 +96,7 @@ button{
   transition: background-color 0.3s;
 }
 
-button:hover{
+.botaoCadastro:hover{
   background-color: #f8a72dbb;
 }
 
