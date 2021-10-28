@@ -1,31 +1,23 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-	<meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <meta name="generator" />
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cadastrar Livro</title>
-	
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">  
-	<link href="../../css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="./css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
-   <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-   />
-	
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link href="./css/livro.css" rel="stylesheet" />
-	 <script src="../../js/isLoged.js"></script>
-	 <script src="../../lib/sweetalert2@11.js" defer></script>
-
-	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-		<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+	<script src="../../js/isLoged.js"></script>
+	<script src="../../lib/sweetalert2@11.js" defer></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 	
 </head>
 
@@ -47,7 +39,7 @@
 					<li class="nav-item">
 						<a class="nav-link" href="view/sobre/index.html">Contato</a>
 					</li>
-					<li id="userOrEnter" class="nav-item dropdown" style="text-transform: capitalize;"></li>
+					<li id="userOrEnter" class="nav-item dropdown"></li>
 				</div>
 			</div>
 		</div>
@@ -66,7 +58,7 @@
 
 
 			<div class="row">
-				<div class="label-float">
+				<div class="col-12 label-float">
 					<input type="text" id="isbn" maxlength="13" placeholder=" " required>
 					<label id="labelIsbn" for="isbn">ISBN</label>
 				</div>
@@ -74,7 +66,7 @@
 
 
 			<div class="row">
-				<div class="label-float">
+				<div class="col-12 label-float">
 					<input type="text" id="titulo" maxlength="30" placeholder=" " required>
 					<label id="labelTitulo" for="titulo">Título</label>
 				</div>
@@ -82,7 +74,7 @@
 
 		 
 			<div class="row">
-				<div class="label-float">
+				<div class="col-12 label-float">
 					<input type="text" id="autor" maxlength="30" placeholder=" " required>
 					<label id="labelAutor" for="autor">Autor</label>
 				</div> 
@@ -120,7 +112,7 @@
 		</div>
 	</div>
 
-	<!-- Modal -->
+	<!-- Modal Dados-->
     <div class="modal fade" id="modalDados" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -156,6 +148,27 @@
             </div>
         </div>
     </div>
+
+	<!-- Modal Sair -->
+    <div class="modal fade" id="modalSair" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Sair</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					Tem certeza que deseja sair?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Continuar</button>
+					<button type="button" class="btn btn-danger">Sair</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	<script src="./js/sendRequest.js"></script>
 	<script src="./js/cad_livro.js"></script>
@@ -171,12 +184,12 @@
 					<li><a class="dropdown-item" href="https://livrados.vercel.app/view/cadastrar_livro/">Incluir Livro</a></li>
 					<li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalDados">Meus Dados</a></li>
 					<li><a class="dropdown-item" href="https://livrados.vercel.app/view/meus_livros/"">Meus Livros</a></li>
-					<li><a class="dropdown-item" href="#">Sair</a></li>
+					<li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalSair">Sair</a></li>
 				</ul>`;
 		else 
 			document.querySelector('#userOrEnter').innerHTML = '<a class="cta" href="https://livrados.vercel.app/view/login/">Entrar</a>'
 	</script>
-	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
    </body>
 </html>
