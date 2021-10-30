@@ -86,30 +86,11 @@
                     </div>
                 </div>
          
-                <!-- <div class="col-6" style="margin: 35px;"><br/>
-                    <div class="card flex-row" style="padding: 1%">
-                        <div class="align-self-center">
-                            <img class="card-img-left" src="images/logo.png" style="width: 130px; height: 130px; padding: 2%;" alt="Card image cap">    
-                        </div>
-                        <div class="card-body">
-                        <h5 class="card-title">Título do Livro</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <div class="d-flex justify-content-center">
-                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalDetalhes">
-                                Detalhes&nbsp;&nbsp;
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-heading" viewBox="0 0 16 16">
-                                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-                                    <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"/>
-                                </svg>
-                            </button>
-                        </div>
+                <div class="col-6" style="margin: 35px;">
+                    <div class="row" id="listaLivros">
+                        <!-- AQUI VAI RENDERIZAR OS LIVROS. DEIXA VAZIO MESMO -->
                     </div>
-                </div> -->
-                
-                <div class="row" id="listaLivros">
-                    <!-- AQUI VAI RENDERIZAR OS LIVROS. DEIXA VAZIO MESMO -->
                 </div>
-
             </div>
         </div>
   
@@ -257,27 +238,24 @@
 
                     livros.forEach(el => {
                 document.querySelector('#listaLivros').innerHTML += `
-                    <div class="col-sm-12 col-lg-4"><br/>
-                        <div class="card" style="padding: 20px">
-                            <h5 class="card-title text-center">${el.title}</h5>
-                            <div class="row">
-                                
-                                <div class="col-8 col-lg-12 text-center">
-                                    <p class="dados_livros">AUTOR: ${el.author}</p>
-                                    <p class="dados_livros">CATEGORIA: ${el.category}</p>
-                                    <div class="d-flex justify-content-center">
-                                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalLivro">
-                                            Detalhes&nbsp;&nbsp;
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-heading" viewBox="0 0 16 16">
-                                                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-                                                <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"/>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>            
-                    </div>`
+
+                <div class="card flex-row col-12" style="padding: 1%; margin:10px">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">${el.title}</h5>
+                        <p class="dados_livros"><strong>Autor:</strong> ${el.author}<br>
+                                                <strong>Categoria:</strong> ${el.category}<br>
+                                                <strong>Distância:</strong> </p>
+                        <div class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalDetalhes">
+                                Detalhes&nbsp;&nbsp;
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-heading" viewBox="0 0 16 16">
+                                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                    <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>`
             })
 
                     console.log(livros);
@@ -286,49 +264,7 @@
                     console.log("Erro ao acessar endpoint de busca de livro pelo titulo : " + err);
                 }
             });
-
-
-            /* let livros = []
-            fetch('/').then((res)=> {
-                res.json()}).
-                then((res)=> {
-                livros = res.books.data
-            }); */
-
-            /* let livros =[
-                {
-                    id: 1,
-                    titulo: '1984',
-                    autor: 'Autor teste',
-                    categoria: 'Categoria teste',
-                    edicao: 'Edição teste',
-                    editora: 'Editora xyz',
-                    img: './img/crimecastigo.jpg'
-                },
-                {
-                    id: 2,
-                    titulo: 'Novelas nada exemplares',
-                    autor: 'Autor teste 2',
-                    categoria: 'Categoria teste 2',
-                    edicao: 'Edição teste 2',
-                    editora: 'Editora xyz 2',
-                    img: './img/crimecastigo.jpg'
-                },
-                {
-                    id: 3,
-                    titulo: 'Crime e Castigo',
-                    autor: 'Autor teste 3',
-                    categoria: 'Categoria teste 3',
-                    edicao: 'Edição teste 3',
-                    editora: 'Editora xyz 3',
-                    img: './img/crimecastigo.jpg'
-                },
-            ] */
-
         </script>
-
-
-
         
         <script type="text/javascript" src="js/mobile.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
