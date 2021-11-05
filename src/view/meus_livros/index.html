@@ -52,54 +52,6 @@
                 <!-- AQUI VAI RENDERIZAR OS LIVROS. DEIXA VAZIO MESMO -->
             </div>
         </div>
-  
-    <!-- Modal Livros-->
-    <div class="modal fade" id="modalLivro" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Título</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><strong>ISBN:</strong></li>
-                        <li class="list-group-item"><strong>Título:</strong></li>
-                        <li class="list-group-item"><strong>Autor:</strong></li>
-                        <li class="list-group-item"><strong>Edição:</strong></li>
-                        <li class="list-group-item"><strong>Editora:</strong></li>
-                        <li class="list-group-item"><strong>Categoria:</strong></li>
-                        <li class="list-group-item">
-                            <div class="input-group">
-                                <select class="custom-select d-block w-100" required="">
-                                    <option disabled selected>Status...</option>
-                                    <option>Disponível</option>
-                                    <option>Indisponível</option>
-                                  </select>
-                            </div>
-                        </li>
-                    </ul> 
-                </div>
-                <div class="modal-footer">
-                    <div class="align-self-center">
-                        <button type="button" class="btn btn-warning">Editar  
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                            </svg>
-                        </button>
-                        <button type="button" class="btn btn-danger">Excluir  
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
-                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
-                        </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Modal Dados -->
     <div class="modal fade" id="modalDados" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -215,7 +167,7 @@
                 },
             ]
             
-            livros.forEach(el => {
+            livros.forEach((el, index) => {
                 document.querySelector('#listaLivros').innerHTML += `
                     <div class="col-sm-12 col-lg-4"><br/>
                         <div class="card" style="padding: 20px">
@@ -228,7 +180,7 @@
                                     <p class="dados_livros">AUTOR: ${el.author}</p>
                                     <p class="dados_livros">CATEGORIA: ${el.category}</p>
                                     <div class="d-flex justify-content-center">
-                                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalLivro">
+                                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalLivro${index}">
                                             Detalhes&nbsp;&nbsp;
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-heading" viewBox="0 0 16 16">
                                                 <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
@@ -239,8 +191,73 @@
                                 </div>
                             </div>
                         </div>            
+                    </div>
+                    
+                    <!-- Modal Livros-->
+                    <div class="modal fade" id="modalLivro${index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">${el.title}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item"><strong>ISBN: </strong>${el.isbn}</li>
+                                        <li class="list-group-item"><strong>Título: </strong>${el.title}</li>
+                                        <li class="list-group-item"><strong>Autor: </strong>${el.author}</li>
+                                        <li class="list-group-item"><strong>Edição: </strong>${el.edition}</li>
+                                        <li class="list-group-item"><strong>Editora: </strong>${el.publisher}</li>
+                                        <li class="list-group-item">
+                                            <div class="input-group">
+                                                <select class="custom-select d-block w-100" required="">
+                                                    <option disabled selected>Categoria...</option>
+                                                    <option>Ação</option>
+                                                    <option>Autoajuda</option>
+                                                    <option>Aventura</option>
+                                                    <option>Biográfico</option>
+                                                    <option>Científico</option>
+                                                    <option>Conto</option>
+                                                    <option>Crônica</option>
+                                                    <option>Didático</option>
+                                                    <option>Drama</option>
+                                                    <option>Fantasia</option>
+                                                    <option>Ficção Científica</option>
+                                                    <option>Infantojuvenil</option>
+                                                    <option>Poesia</option>
+                                                    <option>Terror</option>
+                                                    <option>Turismo</option>
+                                                    <option>Outro</option>
+                                                </select>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="input-group">
+                                                <select class="custom-select d-block w-100" required="">
+                                                    <option disabled selected>Status...</option>
+                                                    <option>Disponível</option>
+                                                    <option>Indisponível</option>
+                                                </select>
+                                            </div>
+                                        </li>
+                                    </ul> 
+                                </div>
+                                <div class="modal-footer">
+                                    <div class="align-self-center">
+                                        <button type="button" class="btn btn-danger">
+                                            Excluir  
+                                        </button>
+                                        <button type="button" class="btn btn-success">
+                                            Salvar  
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>`
-            })
+            });
 
         </script>
 
