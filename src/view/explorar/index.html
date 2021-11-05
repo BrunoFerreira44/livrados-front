@@ -110,7 +110,6 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item modal_name" style="line-height: 1"></li>
                         <li class="list-group-item modal_phone" style="line-height: 1"></li>
-                        <li class="list-group-item modal_email" style="line-height: 1"></li>
                         <li class="list-group-item modal_cep" style="line-height: 1"></li>
                         <!-- <li class="list-group-item" style="line-height: 1"><strong>Endereço:</strong></li>
                         <li class="list-group-item" style="line-height: 1"><strong>Número:</strong></li>
@@ -122,11 +121,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="align-self-center">
-                        <button type="button" class="btn btn-warning">Editar&nbsp;&nbsp;  
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                            </svg>
-                        </button>
+                        <button type="button" class="btn btn-success">Salvar</button>
                     </div>
                 </div>
             </div>
@@ -174,10 +169,33 @@
                         <li><a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalSair">Sair</a></li>
                     </ul>`;
                 
-                document.querySelector('.modal_name').innerHTML = `<strong>Nome Completo: </strong>${name}`;
-                document.querySelector('.modal_phone').innerHTML = `<strong>Celular: </strong>${phone}`;
-                document.querySelector('.modal_email').innerHTML = `<strong>E-mail: </strong>${email}`;
-                document.querySelector('.modal_cep').innerHTML = `<strong>Cep: </strong>${cep}`;
+                document.querySelector('.modal_name').innerHTML = 
+                `<div class="row">
+                    <div style="padding-top: 2%" class="col-5">
+                        <strong>Nome Completo: &nbsp;&nbsp;</strong>
+                    </div>
+                    <div contenteditable="true" class="form-control col-7">
+                        ${name}
+                    </div>
+                </div>`;
+                document.querySelector('.modal_phone').innerHTML = 
+                `<div class="row">
+                    <div style="padding-top: 2%" class="col-5">
+                        <strong>Celular: &nbsp;&nbsp;</strong>
+                    </div>
+                    <div contenteditable="true" class="form-control col-7">
+                        ${phone}
+                    </div>
+                </div>`;
+                document.querySelector('.modal_cep').innerHTML = 
+                `<div class="row">
+                    <div style="padding-top: 2%" class="col-5">
+                        <strong>CEP: &nbsp;&nbsp;</strong>
+                    </div>
+                    <div contenteditable="true" class="form-control col-7">
+                        ${cep}
+                    </div>
+                </div>`;
             }
             else 
                 document.querySelector('#userOrEnter').innerHTML = '<a class="cta" href="https://livrados.vercel.app/view/login/">Entrar</a>'
@@ -242,7 +260,7 @@
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Título</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">${el.title}</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -250,7 +268,6 @@
                             <div class="modal-body">
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item" style="line-height: 1"><strong>ISBN: </strong>${el.isbn}</li>
-                                    <li class="list-group-item" style="line-height: 1"><strong>Título: </strong>${el.title}</li>
                                     <li class="list-group-item" style="line-height: 1"><strong>Autor: </strong>${el.author}</li>
                                     <li class="list-group-item" style="line-height: 1"><strong>Edição: </strong>${el.edition}</li>
                                     <li class="list-group-item" style="line-height: 1"><strong>Editora: </strong>${el.publisher}</li>
