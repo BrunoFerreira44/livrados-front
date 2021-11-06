@@ -2,20 +2,22 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Explorar</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Explorar</title>
+        
         <link rel="stylesheet" href="css/styles.css">
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-        <!-- <script src="js/integration.js" defer ></script> -->
 
     </head>
     <body>
@@ -203,14 +205,88 @@
         
         <script>
 
+            window.onload = async function() {
+
+                let livrosOnLoad = [];
+
+                try {
+                    const result = await fetch('https://livrados-backend.herokuapp.com/searchAllBooks');
+                    const jsonResult = await result.json();
+    
+                    if (jsonResult.error) {
+                        return console.log('Erro na resposta do fetch');
+                    }
+    
+                    livrosOnLoad = jsonResult.books;
+    
+    
+                    livrosOnLoad.forEach((el, index) => {
+                        document.querySelector('#listaLivros').innerHTML += `
+                        <div class="card flex-row col-12" style="padding: 1%; margin:10px">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">${el.title}</h5>
+                                <p class="dados_livros"><strong>Autor:</strong> ${el.author}<br>
+                                                        <strong>Categoria:</strong> ${el.category}<br>
+                                                        <strong>Distância:</strong> </p>
+                                <div class="d-flex justify-content-center">
+                                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalDetalhes${index}">
+                                        Detalhes&nbsp;&nbsp;
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-heading" viewBox="0 0 16 16">
+                                            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                            <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                
+                
+                        <!-- Modal Detalhes do Livro -->
+                        <div class="modal fade" id="modalDetalhes${index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">${el.title}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item" style="line-height: 1"><strong>ISBN: </strong>${el.isbn}</li>
+                                            <li class="list-group-item" style="line-height: 1"><strong>Autor: </strong>${el.author}</li>
+                                            <li class="list-group-item" style="line-height: 1"><strong>Edição: </strong>${el.edition}</li>
+                                            <li class="list-group-item" style="line-height: 1"><strong>Editora: </strong>${el.publisher}</li>
+                                            <li class="list-group-item" style="line-height: 1"><strong>Categoria: </strong>${el.category}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="align-self-center">
+                                            <button onClick="enviarMensagem('${el.user_name}', '${el.user_phone}', '${el.title}');" type="button" class="btn btn-success whatsapp" target="_blank">Combinar&nbsp;&nbsp;  
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
+                                                    <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+                    });
+                } catch (err) {
+                    console.log("Erro ao acessar endpoint de busca de livro pelo titulo : " + err);
+                }
+            };
+            
+            
             let livros = [];
+
             const txtBuscar = document.querySelector('#txtBuscar');
             const btnBuscar = document.querySelector('#btnBuscar');
-
-
             btnBuscar.addEventListener('click', async (evt) => {
 
                 evt.preventDefault();
+                document.querySelector('#listaLivros').innerHTML = ``;
 
                 const requestDetails = {
                     method: 'POST',
@@ -228,84 +304,79 @@
                         return console.log('Erro na resposta do fetch');
                     }
 
-                    console.log('CONSOLANDO O JSON RESULT =====')
-                    console.log(jsonResult.books);
                     livros = jsonResult.books;
 
 
                     livros.forEach((el, index) => {
-                document.querySelector('#listaLivros').innerHTML += `
-
-                <div class="card flex-row col-12" style="padding: 1%; margin:10px">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">${el.title}</h5>
-                        <p class="dados_livros"><strong>Autor:</strong> ${el.author}<br>
-                                                <strong>Categoria:</strong> ${el.category}<br>
-                                                <strong>Distância:</strong> </p>
-                        <div class="d-flex justify-content-center">
-                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalDetalhes${index}">
-                                Detalhes&nbsp;&nbsp;
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-heading" viewBox="0 0 16 16">
-                                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-                                    <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                
-                <!-- Modal Detalhes do Livro -->
-                <div class="modal fade" id="modalDetalhes${index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">${el.title}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            </div>
-                            <div class="modal-body">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item" style="line-height: 1"><strong>ISBN: </strong>${el.isbn}</li>
-                                    <li class="list-group-item" style="line-height: 1"><strong>Autor: </strong>${el.author}</li>
-                                    <li class="list-group-item" style="line-height: 1"><strong>Edição: </strong>${el.edition}</li>
-                                    <li class="list-group-item" style="line-height: 1"><strong>Editora: </strong>${el.publisher}</li>
-                                    <li class="list-group-item" style="line-height: 1"><strong>Categoria: </strong>${el.category}</li>
-                                </ul>
-                            </div>
-                            <div class="modal-footer">
-                                <div class="align-self-center">
-                                    <button onClick="enviarMensagem('${el.user_name}', '${el.user_phone}', '${el.title}');" type="button" class="btn btn-success whatsapp" target="_blank">Combinar&nbsp;&nbsp;  
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
-                                            <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                        document.querySelector('#listaLivros').innerHTML += `
+                        <div class="card flex-row col-12" style="padding: 1%; margin:10px">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">${el.title}</h5>
+                                <p class="dados_livros"><strong>Autor:</strong> ${el.author}<br>
+                                                        <strong>Categoria:</strong> ${el.category}<br>
+                                                        <strong>Distância:</strong> </p>
+                                <div class="d-flex justify-content-center">
+                                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalDetalhes${index}">
+                                        Detalhes&nbsp;&nbsp;
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-heading" viewBox="0 0 16 16">
+                                            <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                            <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"/>
                                         </svg>
                                     </button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>`
-            })
-
-                    console.log(livros);
-
+                
+                
+                        <!-- Modal Detalhes do Livro -->
+                        <div class="modal fade" id="modalDetalhes${index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">${el.title}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item" style="line-height: 1"><strong>ISBN: </strong>${el.isbn}</li>
+                                            <li class="list-group-item" style="line-height: 1"><strong>Autor: </strong>${el.author}</li>
+                                            <li class="list-group-item" style="line-height: 1"><strong>Edição: </strong>${el.edition}</li>
+                                            <li class="list-group-item" style="line-height: 1"><strong>Editora: </strong>${el.publisher}</li>
+                                            <li class="list-group-item" style="line-height: 1"><strong>Categoria: </strong>${el.category}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="align-self-center">
+                                            <button onClick="enviarMensagem('${el.user_name}', '${el.user_phone}', '${el.title}');" type="button" class="btn btn-success whatsapp" target="_blank">Combinar&nbsp;&nbsp;  
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-whatsapp" viewBox="0 0 16 16">
+                                                    <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+                    });
                 } catch (err) {
                     console.log("Erro ao acessar endpoint de busca de livro pelo titulo : " + err);
                 }
             });
-        
+            
 
             // document.querySelectorAll(".whatsapp").addEventListener("click", enviarMensagem);
             // const phone = localStorage.phone
 
             function enviarMensagem(owner, phone, title){
-    
+
                 var texto = `Olá ${owner}, encontrei seu livro "${title}" no Livrados.`;
                 texto = window.encodeURIComponent(texto);
-    
+
                 window.open("https://api.whatsapp.com/send?phone=" + phone + "&text=" + texto, "_blank");
             }
+
         </script>
         
         <script type="text/javascript" src="js/mobile.js"></script>
