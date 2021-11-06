@@ -203,9 +203,29 @@
                 document.querySelector('#userOrEnter').innerHTML = '<a class="cta" href="https://livrados.vercel.app/view/login/">Entrar</a>'
         </script>
         
+
+
+        
         <script>
 
+            let userLat = '';
+            let userLgt = '';
+
             window.onload = async function() {
+
+                try {
+                    const fetchUserLatLong = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${localStorage.user_cep}&key=AIzaSyAbrR1prX3n0OLB1HKS2TvwpB6hnwUljNM`);
+                    const fetchUserLatLongJson = await fetchUserLatLong.json();
+
+                    userLat = fetchUserLatLongJson.results[0].geometry.location.lat;
+                    userLgt = fetchUserLatLongJson.results[0].geometry.location.lng;
+
+                } catch (err) {
+                    console.log('Captação de latitude e longitude do Local Storage falhou');
+                }
+
+
+                
 
                 let livrosOnLoad = [];
 
@@ -220,14 +240,57 @@
                     livrosOnLoad = jsonResult.books;
     
     
-                    livrosOnLoad.forEach((el, index) => {
+                    livrosOnLoad.forEach( async (el, index) => {
+
+                    let distanciaFinal = await getLatLong();
+
+                    async function getLatLong() {
+
+                        let initialBookerLat = '';
+                        let initialBookerLgt = '';
+
+                        try {
+                            
+                            const result = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${el.user_cep}&key=AIzaSyAbrR1prX3n0OLB1HKS2TvwpB6hnwUljNM`);
+                            const resultJson = await result.json();
+
+                            initialBookerLat = resultJson.results[0].geometry.location.lat;
+                            initialBookerLgt = resultJson.results[0].geometry.location.lng;
+                        } catch (err) {
+                            console.log('Erro ao tentar usar geolocalização do google');
+                        }
+
+                        function getDistanceFromLatLonInKm(position1, position2) {
+                            "use strict";
+                            var deg2rad = function (deg) { return deg * (Math.PI / 180); },
+                                R = 6371,
+                                dLat = deg2rad(position2.lat - position1.lat),
+                                dLng = deg2rad(position2.lng - position1.lng),
+                                a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                                    + Math.cos(deg2rad(position1.lat))
+                                    * Math.cos(deg2rad(position1.lat))
+                                    * Math.sin(dLng / 2) * Math.sin(dLng / 2),
+                                c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                            return ((R * c).toFixed());
+                        }
+
+                        let distancia = (getDistanceFromLatLonInKm(
+                            {lat: initialBookerLat, lng: initialBookerLgt},
+                            {lat: userLat, lng: userLgt}
+                        ));
+
+                        return distancia;                            
+                    }
+
+
                         document.querySelector('#listaLivros').innerHTML += `
                         <div class="card flex-row col-12" style="padding: 1%; margin:10px">
                             <div class="card-body">
                                 <h5 class="card-title text-center">${el.title}</h5>
                                 <p class="dados_livros"><strong>Autor:</strong> ${el.author}<br>
                                                         <strong>Categoria:</strong> ${el.category}<br>
-                                                        <strong>Distância:</strong> </p>
+                                                        <strong>Distância:</strong> ${distanciaFinal} km<br>
+                                </p>
                                 <div class="d-flex justify-content-center">
                                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalDetalhes${index}">
                                         Detalhes&nbsp;&nbsp;
@@ -288,6 +351,7 @@
                 evt.preventDefault();
                 document.querySelector('#listaLivros').innerHTML = ``;
 
+
                 const requestDetails = {
                     method: 'POST',
                     body: JSON.stringify({
@@ -306,15 +370,72 @@
 
                     livros = jsonResult.books;
 
+                    livros.forEach(async (el, index) => {
 
-                    livros.forEach((el, index) => {
+                        let distanciaFinal = await getLatLong();
+
+                        async function getLatLong() {
+
+                            let bookerLat = '';
+                            let bookerLgt = '';
+
+                            try {
+                                
+                                const result = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${el.user_cep}&key=AIzaSyAbrR1prX3n0OLB1HKS2TvwpB6hnwUljNM`);
+                                const resultJson = await result.json();
+
+                                bookerLat = resultJson.results[0].geometry.location.lat;
+                                bookerLgt = resultJson.results[0].geometry.location.lng;
+                            } catch (err) {
+                                console.log('Erro ao tentar usar geolocalização do google');
+                            }
+
+                            function getDistanceFromLatLonInKm(position1, position2) {
+                                "use strict";
+                                var deg2rad = function (deg) { return deg * (Math.PI / 180); },
+                                    R = 6371,
+                                    dLat = deg2rad(position2.lat - position1.lat),
+                                    dLng = deg2rad(position2.lng - position1.lng),
+                                    a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                                        + Math.cos(deg2rad(position1.lat))
+                                        * Math.cos(deg2rad(position1.lat))
+                                        * Math.sin(dLng / 2) * Math.sin(dLng / 2),
+                                    c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                                return ((R * c *1000).toFixed());
+                            }
+
+                            distancia = (getDistanceFromLatLonInKm(
+                                {lat: bookerLat, lng: bookerLgt},
+                                {lat: userLat, lng: userLgt}
+                            ));
+
+                            return distancia;                            
+                        }
+
+                        distanciaFinal /= 1000;
+
+
+                        /* var lat = '';
+                        var lng = '';
+                        var cep = el.cep;
+                        geocoder.geocode( { 'address': cep}, function(results, status) {
+                        if (status == google.maps.GeocoderStatus.OK) {
+                            lat = results[0].geometry.location.lat();
+                            lng = results[0].geometry.location.lng();
+                        } else {
+                            console.log("Não foi possivel obter localização: " + status);
+                        }
+                        });
+                        console.log('Latitude: ' + lat + ' Logitude: ' + lng); */
+
                         document.querySelector('#listaLivros').innerHTML += `
                         <div class="card flex-row col-12" style="padding: 1%; margin:10px">
                             <div class="card-body">
                                 <h5 class="card-title text-center">${el.title}</h5>
                                 <p class="dados_livros"><strong>Autor:</strong> ${el.author}<br>
                                                         <strong>Categoria:</strong> ${el.category}<br>
-                                                        <strong>Distância:</strong> </p>
+                                                        <strong>Distância:</strong> ${distanciaFinal.toFixed(2)} km<br>
+                                </p>
                                 <div class="d-flex justify-content-center">
                                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalDetalhes${index}">
                                         Detalhes&nbsp;&nbsp;
@@ -374,7 +495,7 @@
                 var texto = `Olá ${owner}, encontrei seu livro "${title}" no Livrados.`;
                 texto = window.encodeURIComponent(texto);
 
-                window.open("https://api.whatsapp.com/send?phone=" + phone + "&text=" + texto, "_blank");
+                window.open("https://api.whatsapp.com/send?phone=55" + phone + "&text=" + texto, "_blank");
             }
 
         </script>
