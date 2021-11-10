@@ -5,8 +5,9 @@
         <title>Contato</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="styles.css">
         <link href="css/bootstrap.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/contato.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -15,6 +16,7 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <link href="css/fontawesome-free-5.15.4-web/css/all.css" rel="stylesheet">
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -40,13 +42,23 @@
             </div>
         </nav>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-12 mt-3">
-                    <h3 class="text-center">Contato</h3>
+            <main>
+                <div class="position-relative overflow-hidden p-3 p-md-5 text-left bg-light">
+                    <div class="col-md-5 p-lg-5 mx-auto my-4">
+                        <h1 class="display-4 fw-normal">Contate-nos</h1>
+                        <p class="lead fw-normal">Lorem ipsum dolor sit amet, consectetur adipiscing 
+                            elit. Fusce hendrerit finibus dictum. Sed id semper diam, sed ultrices orci. 
+                            In dui sapien, facilisis sit amet porta auctor, pulvinar a leo.</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16" style="color: #f8a72d;">
+                                <path fill-rule="evenodd" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                            </svg>
+                        <span id="contato">contato.livrados@gmail.com</span>    
+                        <!--<button onclick="copiar()">
+                            <i class="far fa-copy"></i>
+                        </button> -->
+                    </div>
                 </div>
-            </div>
-        </div>
+            </main>    
         
         <footer class="bg-dark text-center text-white">
             <div class="container p-4 pb-0">
@@ -55,7 +67,7 @@
                     <a class="btn m-0" href="#!" role="button">
                         <i class="bi bi-github" style="color: #f8a72d; font-size: 35px;"></i>
                     </a>
-                    <img class="logoBMB" src="" style="float:right; width: 80px;">
+                    <img class="logoBMB" src="img/BMBLogo.png" style="float:right; width: 80px;">
               </div>
             </div>
             <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
@@ -80,8 +92,7 @@
             else 
                 document.querySelector('#userOrEnter').innerHTML = '<a class="cta" href="https://livrados.vercel.app/view/login/">Entrar</a>'
         </script>
-        
-        <script type="text/javascript" src="css/mobile.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        
     </body>
 </html>
