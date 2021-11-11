@@ -5,15 +5,17 @@
         <title>Meus Livros</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
         <link rel="stylesheet" href="styles.css">
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
+        
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:500&display=swap" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     </head>
@@ -33,7 +35,7 @@
                             <a class="nav-link active" aria-current="page" href="https://livrados.vercel.app/view/explorar/">Explorar</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="view/sobre/index.html">Contato</a>
+                            <a class="nav-link" href="https://livrados.vercel.app/view/contato/">Contato</a>
                         </li>
                         <li id="userOrEnter" class="nav-item dropdown" style="text-transform: capitalize;"></li>
                     </div>
@@ -77,138 +79,132 @@
     </script>
         
     <script>
-            // let livros = []
-            // fetch('/').then((res)=> {
-            //     res.json()
-            // }).then((res)=> {
-            //     livros = res.data
-            // })
 
-            let livros =[
-                {
-                    id: 1,
-                    titulo: '1984',
-                    autor: 'Autor teste',
-                    categoria: 'Categoria teste',
-                    edicao: 'Edição teste',
-                    editora: 'Editora xyz',
-                    img: './img/crimecastigo.jpg'
-                },
-                {
-                    id: 2,
-                    titulo: 'Novelas nada exemplares',
-                    autor: 'Autor teste 2',
-                    categoria: 'Categoria teste 2',
-                    edicao: 'Edição teste 2',
-                    editora: 'Editora xyz 2',
-                    img: './img/crimecastigo.jpg'
-                },
-                {
-                    id: 3,
-                    titulo: 'Crime e Castigo',
-                    autor: 'Autor teste 3',
-                    categoria: 'Categoria teste 3',
-                    edicao: 'Edição teste 3',
-                    editora: 'Editora xyz 3',
-                    img: './img/crimecastigo.jpg'
-                },
-            ]
-            
-            livros.forEach((el, index) => {
-                document.querySelector('#listaLivros').innerHTML += `
-                    <div class="col-sm-12 col-lg-4"><br/>
-                        <div class="card" style="padding: 20px">
-                            <h5 class="card-title text-center">${el.title}</h5>
-                            <div class="row">
-                                <div class="col-4 col-lg-12 text-center">
-                                    <img class="card-img-left" src="${el.img}" style="width: 130px; height: 130px; padding: 2%;" alt="Card image cap">    
-                                </div>
-                                <div class="col-8 col-lg-12 text-center">
-                                    <p class="dados_livros">AUTOR: ${el.author}</p>
-                                    <p class="dados_livros">CATEGORIA: ${el.category}</p>
-                                    <div class="d-flex justify-content-center">
-                                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalLivro${index}">
-                                            Detalhes&nbsp;&nbsp;
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-heading" viewBox="0 0 16 16">
-                                                <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-                                                <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"/>
-                                            </svg>
+            window.onload = async function() {
+
+                const requestDetails = {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        searchFor: localStorage.user_id
+                    }),
+                    headers: { 'Content-Type': 'application/json' },
+                }
+
+                try {
+                    const fetching = await fetch('https://livrados-backend.herokuapp.com/searchBookByUser', requestDetails);
+                    const fetchingJson = await fetching.json();
+
+                    fetchingJson.books.forEach((el, index) => {
+
+                        let livro = {
+                            isbn: el.isbn,
+                            titulo: el.title,
+                            autor: el.author,
+                            categoria: el.category,
+                            edicao: el.edition,
+                            editora: el.publisher,
+                            img: './img/livro-generico.png'
+                        }
+
+                        document.querySelector('#listaLivros').innerHTML += `
+                            <div class="col-sm-12 col-lg-4"><br/>
+                                <div class="card" style="padding: 20px">
+                                    <h5 class="card-title text-center">${livro.titulo}</h5>
+                                    <div class="row">
+                                        <div class="col-4 col-lg-12 text-center">
+                                            <img class="card-img-left" src="${livro.img}" style="width: 130px; height: 130px; padding: 2%;" alt="Card image cap">    
+                                        </div>
+                                        <div class="col-8 col-lg-12 text-center">
+                                            <p class="dados_livros">AUTOR: ${livro.autor}</p>
+                                            <p class="dados_livros">CATEGORIA: ${livro.categoria}</p>
+                                            <div class="d-flex justify-content-center">
+                                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalLivro${index}">
+                                                    Detalhes&nbsp;&nbsp;
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-heading" viewBox="0 0 16 16">
+                                                        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                                        <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>            
+                            </div>
+                            
+                            <!-- Modal Livros-->
+                            <div class="modal fade" id="modalLivro${index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">${livro.titulo}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                            <span aria-hidden="true">&times;</span>
                                         </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item"><strong>ISBN: </strong>${livro.isbn}</li>
+                                                <li class="list-group-item"><strong>Título: </strong>${livro.titulo}</li>
+                                                <li class="list-group-item"><strong>Autor: </strong>${livro.autor}</li>
+                                                <li class="list-group-item"><strong>Edição: </strong>${livro.edicao}</li>
+                                                <li class="list-group-item"><strong>Editora: </strong>${livro.editora}</li>
+                                                <li class="list-group-item">
+                                                    <div class="input-group">
+                                                        <select class="custom-select d-block w-100" required="">
+                                                            <option disabled selected>Categoria...</option>
+                                                            <option>Ação</option>
+                                                            <option>Autoajuda</option>
+                                                            <option>Aventura</option>
+                                                            <option>Biográfico</option>
+                                                            <option>Científico</option>
+                                                            <option>Conto</option>
+                                                            <option>Crônica</option>
+                                                            <option>Didático</option>
+                                                            <option>Drama</option>
+                                                            <option>Fantasia</option>
+                                                            <option>Ficção Científica</option>
+                                                            <option>Infantojuvenil</option>
+                                                            <option>Poesia</option>
+                                                            <option>Terror</option>
+                                                            <option>Turismo</option>
+                                                            <option>Outro</option>
+                                                        </select>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item">
+                                                    <div class="input-group">
+                                                        <select class="custom-select d-block w-100" required="">
+                                                            <option disabled selected>Status...</option>
+                                                            <option>Disponível</option>
+                                                            <option>Indisponível</option>
+                                                        </select>
+                                                    </div>
+                                                </li>
+                                            </ul> 
+                                        </div>
+                                        <div class="modal-footer">
+                                            <div class="align-self-center">
+                                                <button type="button" class="btn btn-danger">
+                                                    Excluir  
+                                                </button>
+                                                <button type="button" class="btn btn-success">
+                                                    Salvar  
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>            
-                    </div>
-                    
-                    <!-- Modal Livros-->
-                    <div class="modal fade" id="modalLivro${index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">${el.title}</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                </div>
-                                <div class="modal-body">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item"><strong>ISBN: </strong>${el.isbn}</li>
-                                        <li class="list-group-item"><strong>Título: </strong>${el.title}</li>
-                                        <li class="list-group-item"><strong>Autor: </strong>${el.author}</li>
-                                        <li class="list-group-item"><strong>Edição: </strong>${el.edition}</li>
-                                        <li class="list-group-item"><strong>Editora: </strong>${el.publisher}</li>
-                                        <li class="list-group-item">
-                                            <div class="input-group">
-                                                <select class="custom-select d-block w-100" required="">
-                                                    <option disabled selected>Categoria...</option>
-                                                    <option>Ação</option>
-                                                    <option>Autoajuda</option>
-                                                    <option>Aventura</option>
-                                                    <option>Biográfico</option>
-                                                    <option>Científico</option>
-                                                    <option>Conto</option>
-                                                    <option>Crônica</option>
-                                                    <option>Didático</option>
-                                                    <option>Drama</option>
-                                                    <option>Fantasia</option>
-                                                    <option>Ficção Científica</option>
-                                                    <option>Infantojuvenil</option>
-                                                    <option>Poesia</option>
-                                                    <option>Terror</option>
-                                                    <option>Turismo</option>
-                                                    <option>Outro</option>
-                                                </select>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item">
-                                            <div class="input-group">
-                                                <select class="custom-select d-block w-100" required="">
-                                                    <option disabled selected>Status...</option>
-                                                    <option>Disponível</option>
-                                                    <option>Indisponível</option>
-                                                </select>
-                                            </div>
-                                        </li>
-                                    </ul> 
-                                </div>
-                                <div class="modal-footer">
-                                    <div class="align-self-center">
-                                        <button type="button" class="btn btn-danger">
-                                            Excluir  
-                                        </button>
-                                        <button type="button" class="btn btn-success">
-                                            Salvar  
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`
-            });
+                            </div>`
+                    });
+
+
+                } catch (err) {
+                    console.log('Erro no fetch: ' + err)
+                }
+            }     
 
         </script>
 
-        <script type="text/javascript" src="mobile.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     </body>
 </html>
