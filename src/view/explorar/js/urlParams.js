@@ -10,4 +10,5 @@ if (urlParams){
 
     txtBuscar.value = searchFor;
     btnBuscar.click();
+    urlParams.set('');
 }
