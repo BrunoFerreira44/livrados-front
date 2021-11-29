@@ -245,17 +245,6 @@
 
             window.onload = async function() {
 
-                if (window.location.search){
-                    const tmpTxtBuscar = document.querySelector('#txtBuscar');
-                    const tmpBtnBuscar = document.querySelector('#btnBuscar');
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const titleFormatted = urlParams.get("title").replace('_', ' ');
-
-                    tmpTxtBuscar.value = titleFormatted;
-                    return tmpBtnBuscar.click();
-                    
-                }
-
                 try {
                     const fetchUserLatLong = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${localStorage.user_cep}&key=AIzaSyAbrR1prX3n0OLB1HKS2TvwpB6hnwUljNM`);
                     const fetchUserLatLongJson = await fetchUserLatLong.json();
@@ -267,7 +256,16 @@
                     console.log('Captação de latitude e longitude do Local Storage falhou');
                 }
 
+                if (window.location.search){
+                    const tmpTxtBuscar = document.querySelector('#txtBuscar');
+                    const tmpBtnBuscar = document.querySelector('#btnBuscar');
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const titleFormatted = urlParams.get("title").replace('_', ' ');
 
+                    tmpTxtBuscar.value = titleFormatted;
+                    return tmpBtnBuscar.click();
+                    
+                }
                 
 
                 let livrosOnLoad = [];
