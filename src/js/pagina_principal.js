@@ -1,15 +1,3 @@
-const btnSair = document.querySelector('#btnSair');
-
-btnSair.addEventListener('click', () => {
-
-   localStorage.clear();
-   window.location.replace('https://livrados.vercel.app/');
-
-});
-
-
-//#######################################################################
-
 const txtPesquisar = document.querySelector('#txtPesquisar');
 const btnPesquisar = document.querySelector('#btnPesquisar');
 
