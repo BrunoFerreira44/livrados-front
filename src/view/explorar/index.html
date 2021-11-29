@@ -409,9 +409,7 @@
                     const result = await fetch('https://livrados-backend.herokuapp.com/searchBookByTitle', requestDetails);
                     const jsonResult = await result.json();
 
-                    console.log(jsonResult);
-
-                    if(!jsonResult.books[1]){
+                    if(jsonResult.books.length === 0){
                         Swal.fire({
                             icon: "error",
                             /* title: "Opa..", */
