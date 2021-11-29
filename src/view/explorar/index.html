@@ -19,6 +19,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <script src="../../lib/sweetalert2@11.js" defer></script>
 
     </head>
     <body>
@@ -407,6 +408,18 @@
                 try {
                     const result = await fetch('https://livrados-backend.herokuapp.com/searchBookByTitle', requestDetails);
                     const jsonResult = await result.json();
+
+                    console.log(jsonResult);
+
+                    if(!jsonResult.books[1]){
+                        Swal.fire({
+                            icon: "error",
+                            /* title: "Opa..", */
+                            text: "Nenhum livro encontrado. Por favor, tente novamente!",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        });
+                    }
 
                     if (jsonResult.error) {
                         return console.log('Erro na resposta do fetch');
