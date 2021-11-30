@@ -328,7 +328,14 @@
                                 </div>
                                 <p class="dados_livros"><strong>Autor:</strong> ${el.author}<br>
                                                         <strong>Categoria:</strong> ${el.category}<br>
-                                                        <strong>Distância:</strong> ${distanciaFinal} km<br>
+                                                        ${
+                                                            (() => {
+                                                                if(localStorage.token) {
+                                                                    return `<strong>Distância:</strong> ${distanciaFinal} km<br>`;
+                                                            } else {
+                                                                return `<strong>Distância:</strong> ---`;
+                                                            }
+                                                        })()}
                                 </p>
                                 <div class="d-flex justify-content-center">
                                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalDetalhes${index}">
@@ -486,7 +493,15 @@
                                 </div>
                                 <p class="dados_livros"><strong>Autor:</strong> ${el.author}<br>
                                                         <strong>Categoria:</strong> ${el.category}<br>
-                                                        <strong>Distância:</strong> ${distanciaFinal.toFixed(2)} km<br>
+                                                        ${
+                                                            (() => {
+                                                                if(localStorage.token) {
+                                                                    return `<strong>Distância:</strong> ${distanciaFinal.toFixed(2)} km<br>`;
+                                                            } else {
+                                                                return `<strong>Distância:</strong> ---`;
+                                                            }
+                                                        })()}
+                                                        
                                 </p>
                                 <div class="d-flex justify-content-center">
                                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalDetalhes${index}">
