@@ -19,6 +19,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <script src="../../lib/sweetalert2@11.js" defer></script>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -219,7 +220,7 @@
                                         <div class="modal-body">
                                             <ul class="list-group list-group-flush">
                                                 <li class="list-group-item"><strong>ISBN: </strong>${livro.isbn}</li>
-                                                <li class="list-group-item"><strong>Título: </strong>${livro.titulo}</li>
+                                                <li id="titlePopup" class="list-group-item"><strong>Título: </strong>${livro.titulo}</li>
                                                 <li class="list-group-item"><strong>Autor: </strong>${livro.autor}</li>
                                                 <li class="list-group-item"><strong>Edição: </strong>${livro.edicao}</li>
                                                 <li class="list-group-item"><strong>Editora: </strong>${livro.editora}</li>
@@ -227,7 +228,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <div class="align-self-center">
-                                                <button type="button" class="btn btn-danger">
+                                                <button type="button" id="btnExcluir" class="btn btn-danger">
                                                     Excluir  
                                                 </button>
                                             </div>
