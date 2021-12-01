@@ -245,11 +245,11 @@
 
                 const btnDetalhes = document.querySelector('#btnDetalhes');
 
-                btnDetalhes.addEventListener('click', async() => {
+                btnDetalhes.addEventListener('click', () => {
 
                     const btnExcluir = document.querySelector('#btnExcluir');
                     const userId = localStorage.user_id;
-                    const title = document.querySelector('#titlePopup').value.substring(8);
+                    const title = document.querySelector('#titlePopup').textContent.substring(8);
 
                     console.log('User ID === ' + userId);
                     console.log('Titulo === ' + title);
