@@ -1,6 +1,6 @@
 const btnExcluir = document.querySelector('#btnExcluir');
 
-btnExcluir.addEventListener('click', async () => {
+btnExcluir.addEventListener('click', async() => {
 
     const userId = localStorage.user_id;
     const title = document.querySelector('#titlePopup').value.substring(8);
