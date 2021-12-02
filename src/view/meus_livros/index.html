@@ -155,106 +155,127 @@
     </script>
         
     <script>
+        window.onload = async function() {
 
-            window.onload = async function() {
+            const requestDetails = {
+                method: 'POST',
+                body: JSON.stringify({
+                    searchFor: localStorage.user_id
+                }),
+                headers: { 'Content-Type': 'application/json' },
+            }
 
-                const requestDetails = {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        searchFor: localStorage.user_id
-                    }),
-                    headers: { 'Content-Type': 'application/json' },
-                }
+            try {
+                const fetching = await fetch('https://livrados-backend.herokuapp.com/searchBookByUser', requestDetails);
+                const fetchingJson = await fetching.json();
 
-                try {
-                    const fetching = await fetch('https://livrados-backend.herokuapp.com/searchBookByUser', requestDetails);
-                    const fetchingJson = await fetching.json();
+                fetchingJson.books.forEach((el, index) => {
 
-                    fetchingJson.books.forEach((el, index) => {
+                    let livro = {
+                        isbn: el.isbn,
+                        titulo: el.title,
+                        autor: el.author,
+                        categoria: el.category,
+                        edicao: el.edition,
+                        editora: el.publisher,
+                        img: './img/livro-generico.png'
+                    }
 
-                        let livro = {
-                            isbn: el.isbn,
-                            titulo: el.title,
-                            autor: el.author,
-                            categoria: el.category,
-                            edicao: el.edition,
-                            editora: el.publisher,
-                            img: './img/livro-generico.png'
-                        }
-
-                        document.querySelector('#listaLivros').innerHTML += `
-                            <div class="col-sm-12 col-lg-4"><br/>
-                                <div class="card" style="padding: 20px">
-                                    <h5 class="card-title text-center">${livro.titulo}</h5>
-                                    <div class="row">
-                                        <div class="col-4 col-lg-12 text-center">
-                                            <img class="card-img-left" src="${livro.img}" style="width: 130px; height: 130px; padding: 2%;" alt="Card image cap">    
-                                        </div>
-                                        <div class="col-8 col-lg-12 text-center">
-                                            <p class="dados_livros">AUTOR: ${livro.autor}</p>
-                                            <p class="dados_livros">CATEGORIA: ${livro.categoria}</p>
-                                            <div class="d-flex justify-content-center">
-                                                <button id="btnDetalhes" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalLivro${index}">
-                                                    Detalhes&nbsp;&nbsp;
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-heading" viewBox="0 0 16 16">
-                                                        <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
-                                                        <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"/>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                        </div>
+                    document.querySelector('#listaLivros').innerHTML += `
+                        <div class="col-sm-12 col-lg-4"><br/>
+                            <div class="card" style="padding: 20px">
+                                <h5 class="card-title text-center">${livro.titulo}</h5>
+                                <div class="row">
+                                    <div class="col-4 col-lg-12 text-center">
+                                        <img class="card-img-left" src="${livro.img}" style="width: 130px; height: 130px; padding: 2%;" alt="Card image cap">    
                                     </div>
-                                </div>            
-                            </div>
-                            
-                            <!-- Modal Livros-->
-                            <div class="modal fade" id="modalLivro${index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">${livro.titulo}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <ul class="list-group list-group-flush">
-                                                <li class="list-group-item"><strong>ISBN: </strong>${livro.isbn}</li>
-                                                <li id="titlePopup" class="list-group-item"><strong>Título: </strong>${livro.titulo}</li>
-                                                <li class="list-group-item"><strong>Autor: </strong>${livro.autor}</li>
-                                                <li class="list-group-item"><strong>Edição: </strong>${livro.edicao}</li>
-                                                <li class="list-group-item"><strong>Editora: </strong>${livro.editora}</li>
-                                            </ul>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <div class="align-self-center">
-                                                <button type="button" id="btnExcluir" class="btn btn-danger">
-                                                    Excluir  
-                                                </button>
-                                            </div>
+                                    <div class="col-8 col-lg-12 text-center">
+                                        <p class="dados_livros">AUTOR: ${livro.autor}</p>
+                                        <p class="dados_livros">CATEGORIA: ${livro.categoria}</p>
+                                        <div class="d-flex justify-content-center">
+                                            <button id="btnDetalhes" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalLivro${index}">
+                                                Detalhes&nbsp;&nbsp;
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-heading" viewBox="0 0 16 16">
+                                                    <path d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h13zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
+                                                    <path d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"/>
+                                                </svg>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                            </div>`
-                    });
+                            </div>            
+                        </div>
+                        
+                        <!-- Modal Livros-->
+                        <div class="modal fade" id="modalLivro${index}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">${livro.titulo}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item"><strong>ISBN: </strong>${livro.isbn}</li>
+                                            <li id="titlePopup" class="list-group-item"><strong>Título: </strong>${livro.titulo}</li>
+                                            <li class="list-group-item"><strong>Autor: </strong>${livro.autor}</li>
+                                            <li class="list-group-item"><strong>Edição: </strong>${livro.edicao}</li>
+                                            <li class="list-group-item"><strong>Editora: </strong>${livro.editora}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="align-self-center">
+                                            <button type="button" id="btnExcluir" class="btn btn-danger">
+                                                Excluir  
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+                });
 
 
-                } catch (err) {
-                    console.log('Erro no fetch: ' + err)
-                }
+            } catch (err) {
+                console.log('Erro no fetch: ' + err)
+            }
 
-                const btnDetalhes = document.querySelector('#btnDetalhes');
+            //Condição que finaliza experiencia de quem não tem livro cadastrado
+            if (!document.querySelectorAll('#btnDetalhes'))
+                return;
+            /////////////////////////////////////////////////////////////////////////////
 
-                btnDetalhes.addEventListener('click', () => {
 
-                    const btnExcluir = document.querySelector('#btnExcluir');
+            //VETORES COM OS VALORES DOS BOTÕES DETALEHS, EXCLUIR E TITULO
+            const btnDetalhes = [];
+            document.querySelectorAll('#btnDetalhes').forEach( (el, x) => {
+                btnDetalhes[x] = el;
+            });
+
+            const btnExcluir = [];
+            document.querySelectorAll('#btnExcluir').forEach( (el, x) => {
+                btnExcluir[x] = el;
+            });
+
+            const titlePopup = [];
+            document.querySelectorAll('#titlePopup').forEach( (el, x) => {
+                titlePopup[x] = el;
+            });
+            /////////////////////////////////////////////////////////////////////////////
+
+
+            for(let i = 0; i < btnDetalhes.length; i++){
+                btnDetalhes[i].addEventListener('click', (i) => {
+
                     const userId = localStorage.user_id;
-                    const title = document.querySelector('#titlePopup').textContent.substring(8);
+                    const title = titlePopup[i].textContent.substring(8);
 
                     console.log('User ID === ' + userId);
                     console.log('Titulo === ' + title);
 
-                    btnExcluir.addEventListener('click', async() => {
+                    btnExcluir[i].addEventListener('click', async(i) => {
 
                         const requestParams = {
                             method: "POST",
@@ -264,9 +285,8 @@
                             }),
                             headers: { 'Content-Type': 'application/json' },
                         }
-                    
+
                         try {
-                    
                             const fetchDelete = await fetch('https://livrados-backend.herokuapp.com/deleteBook', requestParams);
                             const fetchResult = await fetchDelete.json();
                     
@@ -297,9 +317,9 @@
                         }
                     })
                 })
-            }     
-
-        </script>
+            }
+        }
+    </script>
 
         <script src="../../js/sair.js"></script>
         <script src="../../js/meusDados.js"></script>
