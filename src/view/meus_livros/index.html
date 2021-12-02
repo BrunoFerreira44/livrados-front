@@ -267,7 +267,7 @@
 
 
             for(let i = 0; i < btnDetalhes.length; i++){
-                btnDetalhes[i].addEventListener('click', (i) => {
+                btnDetalhes[i].addEventListener('click', () => {
 
                     const userId = localStorage.user_id;
                     const title = titlePopup[i].textContent.substring(8);
@@ -275,7 +275,7 @@
                     console.log('User ID === ' + userId);
                     console.log('Titulo === ' + title);
 
-                    btnExcluir[i].addEventListener('click', async(i) => {
+                    btnExcluir[i].addEventListener('click', async() => {
 
                         const requestParams = {
                             method: "POST",
